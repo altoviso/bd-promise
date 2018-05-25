@@ -1,0 +1,36 @@
+{
+	"name": "bd-promise",
+	"version": "2.0.0",
+	"description": "JS6 Promise with timeouts and other extra features",
+	"homepage": "http://github.com/altoviso/bd-promise",
+	"bugs": "http://github.com/altoviso/bd-promise/issues",
+	"directories": {
+		"test": "test"
+	},
+	"scripts": {
+		"test": "TODO"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"bd-smoke": "^0.3.1"
+	},
+	"github": "http://github.com/altoviso/bd-promise",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/altoviso/bd-promise.git"
+	},
+	"licenses": [
+		{
+			"type": "BSD",
+			"url": "https://github.com/altoviso/bd-promise/blob/master/LICENSE.txt"
+		}
+	],
+	"keywords": [
+		"JavaScript",
+		"bd-promise",
+		"backdraft",
+		"promise"
+	],
+	"author": "Rawld Gill <rgill@altoviso.com> (http://altoviso.com/)",
+	"license": "BSD-3-Clause"
+}

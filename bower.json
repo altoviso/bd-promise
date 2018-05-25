@@ -1,0 +1,24 @@
+{
+  "name": "bd-promise",
+  "version": "2.0.0",
+  "description": "JS6 Promise with timeouts and other extra features",
+  "main": "promise.js",
+  "authors": [
+    "Rawld Gill <rgill@altoviso.com> (http://altoviso.com/)"
+  ],
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "JavaScript",
+    "bd-promise",
+    "backdraft",
+    "promise"
+  ],
+  "homepage": "https://github.com/altoviso/bd-promise",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
