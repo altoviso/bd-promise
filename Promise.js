@@ -15,7 +15,7 @@ function stopTimer(promise){
 	}
 }
 
-export default class Promise2 extends Promise {
+export default class BdPromise extends Promise {
 	constructor(
 		timeout, // optional, time in milliseconds before promise is rejected; if missing, then never rejected because of time
 		executor // standard promise constructor executor argument: function(resolve, reject)
@@ -119,8 +119,8 @@ export default class Promise2 extends Promise {
 	};
 }
 
-Promise2.promiseTimeExpired = PROMISE_TIME_EXPIRED;
-Promise2.promiseCanceled = PROMISE_CANCELED;
+BdPromise.promiseTimeExpired = PROMISE_TIME_EXPIRED;
+BdPromise.promiseCanceled = PROMISE_CANCELED;
 
 
 

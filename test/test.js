@@ -1,15 +1,15 @@
-import Promise2 from "../promise.js"
+import BdPromise from "../promise.js"
 
 const smoke = window.smoke;
 const assert = smoke.assert;
 smoke.defTest({
-	id: "test Promise2",
+	id: "test BdPromise",
 	tests: [
 		["resolve", function(){
-			// test that a Promise2 resolves correctly asynchronously, no timer
+			// test that a BdPromise resolves correctly asynchronously, no timer
 			return new Promise(function(resolve, reject){
 				let order = "";
-				let p = new Promise2(function(resolve, reject){
+				let p = new BdPromise(function(resolve, reject){
 					setTimeout(function(){
 						order += "2";
 						resolve("OK");
@@ -28,10 +28,10 @@ smoke.defTest({
 		}],
 
 		["resolveSynch", function(){
-			// test that a Promise2 resolves asynchronously with synchronous resolution, no timer
+			// test that a BdPromise resolves asynchronously with synchronous resolution, no timer
 			return new Promise(function(resolve, reject){
 				var order = "";
-				var p = new Promise2(function(resolve, reject){
+				var p = new BdPromise(function(resolve, reject){
 					order += "2";
 					resolve("OK");
 				});
@@ -49,10 +49,10 @@ smoke.defTest({
 		}],
 
 		["reject", function(){
-			// test that a Promise2 rejects correctly asynchronously, no timer
+			// test that a BdPromise rejects correctly asynchronously, no timer
 			return new Promise(function(resolve, reject){
 				var order = "";
-				var p = new Promise2(function(resolve, reject){
+				var p = new BdPromise(function(resolve, reject){
 					setTimeout(function(){
 						order += "2";
 						reject("NAK");
@@ -72,10 +72,10 @@ smoke.defTest({
 		}],
 
 		["rejectSynch", function(){
-			// test that a Promise2 rejects asynchronously with synchronous resolution, no timer
+			// test that a BdPromise rejects asynchronously with synchronous resolution, no timer
 			return new Promise(function(resolve, reject){
 				var order = "";
-				var p = new Promise2(function(resolve, reject){
+				var p = new BdPromise(function(resolve, reject){
 					order += "2";
 					reject("NAK");
 				});
@@ -94,9 +94,9 @@ smoke.defTest({
 		}],
 
 		["cancel", function(){
-			// test that a Promise2 cancels correctly asynchronously, no timer
+			// test that a BdPromise cancels correctly asynchronously, no timer
 			return new Promise(function(resolve, reject){
-				var p = new Promise2(function(resolve, reject){
+				var p = new BdPromise(function(resolve, reject){
 					setTimeout(function(){
 						resolve("OK");
 					}, 75);
@@ -115,7 +115,7 @@ smoke.defTest({
 					}
 				}).catch(function(error){
 					try{
-						assert(error === Promise2.promiseCanceled);
+						assert(error === BdPromise.promiseCanceled);
 						resolve();
 					}catch(e){
 						reject();
@@ -126,9 +126,9 @@ smoke.defTest({
 
 
 		["cancelWithMessage", function(){
-			// test that a Promise2 cancels correctly asynchronously, with a message, no timer
+			// test that a BdPromise cancels correctly asynchronously, with a message, no timer
 			return new Promise(function(resolve, reject){
-				var p = new Promise2(function(resolve, reject){
+				var p = new BdPromise(function(resolve, reject){
 					setTimeout(function(){
 						resolve("OK");
 					}, 75);
@@ -151,9 +151,9 @@ smoke.defTest({
 		}],
 
 		["lateCancel", function(){
-			// test that a Promise2 doesn't cancel when the cancel is late, no timer
+			// test that a BdPromise doesn't cancel when the cancel is late, no timer
 			return new Promise(function(resolve, reject){
-				var p = new Promise2(function(resolve, reject){
+				var p = new BdPromise(function(resolve, reject){
 					setTimeout(function(){
 						resolve("OK");
 					}, 25);
@@ -174,9 +174,9 @@ smoke.defTest({
 		}],
 
 		["resolveWithinTimeout", function(){
-			// test that a Promise2 resolves correctly asynchronously, with a timer
+			// test that a BdPromise resolves correctly asynchronously, with a timer
 			return new Promise(function(resolve, reject){
-				var p = new Promise2(75, function(resolve, reject){
+				var p = new BdPromise(75, function(resolve, reject){
 					setTimeout(function(){
 						resolve("OK");
 					}, 50);
@@ -192,9 +192,9 @@ smoke.defTest({
 		}],
 
 		["TimeoutBeforeResolve", function(){
-			// test that a Promise2 rejects correctly asynchronously, with a timer that times out
+			// test that a BdPromise rejects correctly asynchronously, with a timer that times out
 			return new Promise(function(resolve, reject){
-				var p = new Promise2(50, function(resolve, reject){
+				var p = new BdPromise(50, function(resolve, reject){
 					setTimeout(function(){
 						resolve("OK");
 					}, 75);
@@ -203,7 +203,7 @@ smoke.defTest({
 					assert(false, "promise should timeout.");
 					resolve();
 				}).catch(function(error){
-					assert(error===Promise2.promiseTimeExpired);
+					assert(error===BdPromise.promiseTimeExpired);
 					resolve();
 				});
 			});
