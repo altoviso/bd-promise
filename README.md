@@ -1,5 +1,7 @@
 # bd-promise
-### JS6 Promises with Timeouts and Other Extra Features [ALTOVISO](http://www.altoviso.com/).
+### JS6 Promises with Timeouts and Other Extra Features 
+
+FOSS software contributed by ALTOVISO ([http://www.altoviso.com](http://www.altoviso.com/)).
 
 
 # Features
