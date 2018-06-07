@@ -1,6 +1,5 @@
 {
   "name": "bd-promise",
-  "version": "2.0.0",
   "description": "JS6 Promise with timeouts and other extra features",
   "main": "promise.js",
   "authors": [
