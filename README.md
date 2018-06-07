@@ -4,7 +4,7 @@
 
 # Features
 
-* Constructor includes optional timeout argument to say the promise should cancel after that time has expired, e.g.:
+* Constructor includes optional timeout argument (in ms) to say the promise should cancel after that time has expired, e.g.:
 
  ```let p = new Promise(500, executor);```
 
@@ -17,11 +17,27 @@
 
 ## Installation
 
-Clone this repo.
+With `npm`:
 
-## Status
+```
+npm install bd-promise
+```
 
-TODO
+With `yarn`:
+
+```
+yarn add bd-promise
+```
+
+With `bower`:
+
+```
+bower install --save bd-promise
+```
+
+## Tests
+
+Serve the root directory then point a browser to test/index.html.
 
 ## License
 
