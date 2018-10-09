@@ -20,11 +20,13 @@ export default class BdPromise extends Promise {
 		timeout, // optional, time in milliseconds before promise is rejected; if missing, then never rejected because of time
 		executor // standard promise constructor executor argument: function(resolve, reject)
 	){
-		if(!executor){
+		if(typeof timeout==="function"){
+			// signature is (executor)
 			executor = timeout;
 			timeout = false;
 		}
 		if(!executor){
+			// signature is () or (timeout)
 			executor = function(){
 			};
 		}
