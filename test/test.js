@@ -1,212 +1,219 @@
-import BdPromise from "../promise.js"
+import BdPromise from '../Promise.js';
 
 const smoke = window.smoke;
 const assert = smoke.assert;
 smoke.defTest({
-	id: "test BdPromise",
-	tests: [
-		["resolve", function(){
-			// test that a BdPromise resolves correctly asynchronously, no timer
-			return new Promise(function(resolve, reject){
-				let order = "";
-				let p = new BdPromise(function(resolve, reject){
-					setTimeout(function(){
-						order += "2";
-						resolve("OK");
-					}, 50);
-				});
-				order += "1";
-				p.then(function(result){
-					assert(result == "OK", "promised returned resolved value");
-					assert(order == "12", "promised resolved asynchronously");
-					resolve();
-				}).catch(function(error){
-					assert(false, "resolved promise should not go down error path");
-					reject();
-				});
-			});
-		}],
+    id: 'test bd-promise',
+    tests: [
+        ['resolve', () => {
+            // test that a bd-promise resolves correctly asynchronously, no timer
+            return new Promise(((resolve, reject) => {
+                let order = '';
+                const p = new BdPromise((resolve => {
+                    setTimeout(() => {
+                        order += '2';
+                        resolve('OK');
+                    }, 50);
+                }));
+                order += '1';
+                p.then(result => {
+                    assert(result === 'OK', 'promised returned resolved value');
+                    assert(order === '12', 'promised resolved asynchronously');
+                    resolve();
+                }).catch(error => {
+                    assert(false, 'resolved promise should not go down error path');
+                    console.log(error);
+                    reject();
+                });
+            }));
+        }],
 
-		["resolveSynch", function(){
-			// test that a BdPromise resolves asynchronously with synchronous resolution, no timer
-			return new Promise(function(resolve, reject){
-				var order = "";
-				var p = new BdPromise(function(resolve, reject){
-					order += "2";
-					resolve("OK");
-				});
-				order += "1";
-				p.then(function(result){
-					console.warn("WARNING: promise test is proving wrong execution order for synchronous resolutions because engines are broke");
-					assert(result == "OK", "promised returned resolved value");
-					assert(order == "21", "promised resolved synchronously (improper)");
-					resolve();
-				}).catch(function(error){
-					assert(false, "resolved promise should not go down error path");
-					resolve();
-				});
-			});
-		}],
+        ['resolveSynch', () => {
+            // test that a bd-promise resolves asynchronously with synchronous resolution, no timer
+            return new Promise((resolve => {
+                let order = '';
+                const p = new BdPromise((resolve => {
+                    order += '2';
+                    resolve('OK');
+                }));
+                order += '1';
+                p.then(result => {
+                    console.warn('WARNING: promise test is proving wrong execution order for synchronous resolutions because engines are broke');
+                    assert(result === 'OK', 'promised returned resolved value');
+                    assert(order === '21', 'promised resolved synchronously (improper)');
+                    resolve();
+                }).catch(error => {
+                    assert(false, 'resolved promise should not go down error path');
+                    console.log(error);
+                    resolve();
+                });
+            }));
+        }],
 
-		["reject", function(){
-			// test that a BdPromise rejects correctly asynchronously, no timer
-			return new Promise(function(resolve, reject){
-				var order = "";
-				var p = new BdPromise(function(resolve, reject){
-					setTimeout(function(){
-						order += "2";
-						reject("NAK");
-					}, 50);
-				});
-				order += "1";
-				p.then(function(result){
-					assert(false, "promised was resolved unexpectedly");
-					resolve();
-				}).catch(function(error){
-					assert(error == "NAK", "promised returned rejected value");
-					assert(order == "12", "promised resolved asynchronously");
-					resolve();
+        ['reject', () => {
+            // test that a bd-promise rejects correctly asynchronously, no timer
+            return new Promise((resolve => {
+                let order = '';
+                const p = new BdPromise(((resolve, reject) => {
+                    setTimeout(() => {
+                        order += '2';
+                        // eslint-disable-next-line prefer-promise-reject-errors
+                        reject('NAK');
+                    }, 50);
+                }));
+                order += '1';
+                p.then(result => {
+                    assert(false, 'promised was resolved unexpectedly');
+                    console.log(result);
+                    resolve();
+                }).catch(error => {
+                    assert(error === 'NAK', 'promised returned rejected value');
+                    assert(order === '12', 'promised resolved asynchronously');
+                    resolve();
+                });
+            }));
+        }],
 
-				});
-			});
-		}],
+        ['rejectSynch', () => {
+            // test that a bd-promise rejects asynchronously with synchronous resolution, no timer
+            return new Promise((resolve => {
+                let order = '';
+                const p = new BdPromise(((resolve, reject) => {
+                    order += '2';
+                    // eslint-disable-next-line prefer-promise-reject-errors
+                    reject('NAK');
+                }));
+                order += '1';
+                p.then(result => {
+                    assert(false, 'promised was resolved unexpectedly');
+                    console.log(result);
+                    resolve();
+                }).catch(error => {
+                    console.warn('WARNING: promise test is proving wrong execution order for synchronous resolutions because engines are broke');
+                    assert(error === 'NAK', 'promised returned rejected value');
+                    assert(order === '21', 'promised resolved synchronously (improper)');
+                    resolve();
+                });
+            }));
+        }],
 
-		["rejectSynch", function(){
-			// test that a BdPromise rejects asynchronously with synchronous resolution, no timer
-			return new Promise(function(resolve, reject){
-				var order = "";
-				var p = new BdPromise(function(resolve, reject){
-					order += "2";
-					reject("NAK");
-				});
-				order += "1";
-				p.then(function(result){
-					assert(false, "promised was resolved unexpectedly");
-					resolve();
+        ['cancel', () => {
+            // test that a bd-promise cancels correctly asynchronously, no timer
+            return new Promise(((resolve, reject) => {
+                const p = new BdPromise((resolve => {
+                    setTimeout(() => {
+                        resolve('OK');
+                    }, 75);
+                }));
 
-				}).catch(function(error){
-					console.warn("WARNING: promise test is proving wrong execution order for synchronous resolutions because engines are broke");
-					assert(error == "NAK", "promised returned rejected value");
-					assert(order == "21", "promised resolved synchronously (improper)");
-					resolve();
-				});
-			});
-		}],
+                setTimeout(() => {
+                    p.cancel();
+                }, 25);
 
-		["cancel", function(){
-			// test that a BdPromise cancels correctly asynchronously, no timer
-			return new Promise(function(resolve, reject){
-				var p = new BdPromise(function(resolve, reject){
-					setTimeout(function(){
-						resolve("OK");
-					}, 75);
-				});
-
-				setTimeout(function(){
-					p.cancel();
-				}, 25);
-
-				p.then(function(result){
-					try{
-						assert(false, "promised was resolved unexpectedly");
-						resolve();
-					}catch(e){
-						reject();
-					}
-				}).catch(function(error){
-					try{
-						assert(error === BdPromise.promiseCanceled);
-						resolve();
-					}catch(e){
-						reject();
-					}
-				});
-			});
-		}],
+                p.then(result => {
+                    try {
+                        assert(false, 'promised was resolved unexpectedly');
+                        console.log(result);
+                        resolve();
+                    } catch (e) {
+                        reject();
+                    }
+                }).catch(error => {
+                    try {
+                        assert(error === BdPromise.promiseCanceled);
+                        resolve();
+                    } catch (e) {
+                        reject();
+                    }
+                });
+            }));
+        }],
 
 
-		["cancelWithMessage", function(){
-			// test that a BdPromise cancels correctly asynchronously, with a message, no timer
-			return new Promise(function(resolve, reject){
-				var p = new BdPromise(function(resolve, reject){
-					setTimeout(function(){
-						resolve("OK");
-					}, 75);
-				});
+        ['cancelWithMessage', () => {
+            // test that a bd-promise cancels correctly asynchronously, with a message, no timer
+            return new Promise((resolve => {
+                const p = new BdPromise((resolve => {
+                    setTimeout(() => {
+                        resolve('OK');
+                    }, 75);
+                }));
 
-				var symbolTypeForCancel = Symbol();
+                setTimeout(() => {
+                    p.cancel("here's a reason for you");
+                }, 25);
 
-				setTimeout(function(){
-					p.cancel("here's a reason for you");
-				}, 25);
+                p.then(result => {
+                    assert(false, 'promised was resolved unexpectedly');
+                    console.log(result);
+                    resolve();
+                }).catch(error => {
+                    assert(error === "here's a reason for you");
+                    resolve();
+                });
+            }));
+        }],
 
-				p.then(function(result){
-					assert(false, "promised was resolved unexpectedly");
-					resolve();
-				}).catch(function(error){
-					assert(error === "here's a reason for you");
-					resolve();
-				});
-			});
-		}],
+        ['lateCancel', () => {
+            // test that a bd-promise doesn't cancel when the cancel is late, no timer
+            return new Promise((resolve => {
+                const p = new BdPromise((resolve => {
+                    setTimeout(() => {
+                        resolve('OK');
+                    }, 25);
+                }));
 
-		["lateCancel", function(){
-			// test that a BdPromise doesn't cancel when the cancel is late, no timer
-			return new Promise(function(resolve, reject){
-				var p = new BdPromise(function(resolve, reject){
-					setTimeout(function(){
-						resolve("OK");
-					}, 25);
-				});
+                setTimeout(() => {
+                    p.cancel();
+                }, 75);
 
-				setTimeout(function(){
-					p.cancel();
-				}, 75);
+                p.then(result => {
+                    assert(result === 'OK', 'promised returned resolved value');
+                    resolve();
+                }).catch(error => {
+                    assert(false, 'resolved promise should not go down error path');
+                    console.log(error);
+                    resolve();
+                });
+            }));
+        }],
 
-				p.then(function(result){
-					assert(result == "OK", "promised returned resolved value");
-					resolve();
-				}).catch(function(error){
-					assert(false, "resolved promise should not go down error path");
-					resolve();
-				});
-			});
-		}],
+        ['resolveWithinTimeout', () => {
+            // test that a bd-promise resolves correctly asynchronously, with a timer
+            return new Promise((resolve => {
+                const p = new BdPromise(75, (resolve => {
+                    setTimeout(() => {
+                        resolve('OK');
+                    }, 50);
+                }));
+                p.then(result => {
+                    assert(result === 'OK', 'promised returned resolved value');
+                    resolve();
+                }).catch(error => {
+                    assert(false, 'resolved promise should not go down error path');
+                    console.log(error);
+                    resolve();
+                });
+            }));
+        }],
 
-		["resolveWithinTimeout", function(){
-			// test that a BdPromise resolves correctly asynchronously, with a timer
-			return new Promise(function(resolve, reject){
-				var p = new BdPromise(75, function(resolve, reject){
-					setTimeout(function(){
-						resolve("OK");
-					}, 50);
-				});
-				p.then(function(result){
-					assert(result == "OK", "promised returned resolved value");
-					resolve();
-				}).catch(function(error){
-					assert(false, "resolved promise should not go down error path");
-					resolve();
-				});
-			});
-		}],
-
-		["TimeoutBeforeResolve", function(){
-			// test that a BdPromise rejects correctly asynchronously, with a timer that times out
-			return new Promise(function(resolve, reject){
-				var p = new BdPromise(50, function(resolve, reject){
-					setTimeout(function(){
-						resolve("OK");
-					}, 75);
-				});
-				p.then(function(result){
-					assert(false, "promise should timeout.");
-					resolve();
-				}).catch(function(error){
-					assert(error===BdPromise.promiseTimeExpired);
-					resolve();
-				});
-			});
-		}]
-	]
+        ['TimeoutBeforeResolve', () => {
+            // test that a bd-promise rejects correctly asynchronously, with a timer that times out
+            return new Promise((resolve => {
+                const p = new BdPromise(50, (resolve => {
+                    setTimeout(() => {
+                        resolve('OK');
+                    }, 75);
+                }));
+                p.then(result => {
+                    assert(false, 'promise should timeout.');
+                    console.log(result);
+                    resolve();
+                }).catch(error => {
+                    assert(error === BdPromise.promiseTimeExpired);
+                    resolve();
+                });
+            }));
+        }]
+    ]
 });
