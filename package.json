@@ -1,6 +1,6 @@
 {
   "name": "bd-promise",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "JS6 Promise with timeouts and other extra features",
   "homepage": "http://github.com/altoviso/bd-promise",
   "bugs": "http://github.com/altoviso/bd-promise/issues",
