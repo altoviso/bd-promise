@@ -1,6 +1,6 @@
+import {smoke} from '../node_modules/bd-smoke/smoke.js';
 import BdPromise from '../Promise.js';
 
-const smoke = window.smoke;
 const assert = smoke.assert;
 smoke.defTest({
     id: 'test bd-promise',

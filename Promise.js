@@ -117,4 +117,4 @@ export default class Promise extends window.Promise {
 
 Promise.promiseTimeExpired = PROMISE_TIME_EXPIRED;
 Promise.promiseCanceled = PROMISE_CANCELED;
-Promise.version = '2.2.0';
+Promise.version = '2.2.1';
